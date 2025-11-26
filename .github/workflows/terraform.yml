@@ -28,9 +28,9 @@ jobs:
         # Учетные данные провайдера могут быть переданы через переменные окружения,
         # которые GitHub Actions автоматически загрузит из секретов.
         env:
-          PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
-          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-          SECRET__KEY: ${{ secrets.SECRET_KEY }}
+          TF_VAR_provider_token: ${{ secrets.PROVIDER_TOKEN }}
+          TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
+          TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
 
       - name: Terraform Format
         run: terraform fmt -check
@@ -39,9 +39,9 @@ jobs:
         run: terraform plan -out=tfplan
         working-directory: ./Task2Advanced/
         env:
-          PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
-          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-          SECRET__KEY: ${{ secrets.SECRET_KEY }}
+          TF_VAR_provider_token: ${{ secrets.PROVIDER_TOKEN }}
+          TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
+          TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
