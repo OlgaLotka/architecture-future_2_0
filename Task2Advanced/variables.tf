@@ -1,6 +1,7 @@
 variable "provider_token" {
   description = "Токен"
   type        = string
+  sensitive   = true
 }
 
 variable "provider_cloud_id" {
@@ -24,12 +25,13 @@ variable "bucket" {
 variable "access_key" {
   description = "Ключ доступа"
   type        = string
+  sensitive   = true
 }
 
 
 variable "secret_key" {
   description = "Секрет"
   type        = string
-
+  sensitive   = true
 }
 
