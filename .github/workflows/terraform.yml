@@ -29,8 +29,8 @@ jobs:
         # которые GitHub Actions автоматически загрузит из секретов.
         env:
           TF_VAR_provider_token: ${{ secrets.PROVIDER_TOKEN }}
-          TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
-          TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
       - name: Terraform Format
         run: terraform fmt -check
@@ -40,8 +40,8 @@ jobs:
         working-directory: ./Task2Advanced/
         env:
           TF_VAR_provider_token: ${{ secrets.PROVIDER_TOKEN }}
-          TF_VAR_access_key: ${{ secrets.ACCESS_KEY }}
-          TF_VAR_secret_key: ${{ secrets.SECRET_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
       - name: Upload Plan Artifact
         uses: actions/upload-artifact@v4
