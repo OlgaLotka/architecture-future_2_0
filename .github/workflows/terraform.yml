@@ -23,7 +23,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.PROVIDER_TOKEN }}
 
       - name: Terraform Init
-        if: ${{ secrets.RUN_DEPLOY == 'true' }}
+        if: secrets.RUN_DEPLOY == 'true'
         run: terraform init
         working-directory: ./Task2Advanced/
         # Учетные данные провайдера могут быть переданы через переменные окружения,
