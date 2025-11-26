@@ -24,6 +24,7 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ./Task2Advanced/
         # Учетные данные провайдера могут быть переданы через переменные окружения,
         # которые GitHub Actions автоматически загрузит из секретов.
         env:
@@ -35,11 +36,18 @@ jobs:
         run: terraform fmt -check
 
       - name: Terraform Plan
-        run: terraform plan -var-file="Task2Advanced/main.tf"
+        run: terraform plan -out=tfplan
+        working-directory: ./Task2Advanced/
         env:
           PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
           ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
           SECRET__KEY: ${{ secrets.SECRET_KEY }}
+
+      - name: Upload Plan Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tfplan-artifact
+          path: Task2Advanced/tfplan
 
       - name: Terraform Apply
         # Запускается только при слиянии в main (push event),
