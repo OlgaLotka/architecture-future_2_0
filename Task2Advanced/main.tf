@@ -11,9 +11,8 @@ terraform {
       s3 = "https://storage.yandexcloud.net"
     }
     region = "ru-central1"
-    bucket         = var.bucket
-    access_key     = var.access_key
-    secret_key     = var.secret_key
+    bucket         = "loa"
+    key    = "terraform.tfstate"
 
     skip_region_validation      = true
     skip_credentials_validation = true
