@@ -1,0 +1,51 @@
+name: Terraform CI/CD
+
+on:
+  push:
+    branches:
+      - master_new
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+        # Если используется Terraform Cloud/Enterprise
+        # cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Terraform Init
+        run: terraform init
+        # Учетные данные провайдера могут быть переданы через переменные окружения,
+        # которые GitHub Actions автоматически загрузит из секретов.
+        env:
+          PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          SECRET__KEY: ${{ secrets.SECRET_KEY }}
+
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan
+        env:
+          PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          SECRET__KEY: ${{ secrets.SECRET_KEY }}
+
+      - name: Terraform Apply
+        # Запускается только при слиянии в main (push event),
+        # а не при создании pull request.
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
+        env:
+          PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          SECRET__KEY: ${{ secrets.SECRET_KEY }}
