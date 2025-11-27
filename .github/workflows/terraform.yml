@@ -12,6 +12,8 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    env:
+      TF_LOG: TRACE
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -55,6 +57,6 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve tfplan
         env:
-          PROVIDER_TOKEN: ${{ secrets.PROVIDER_TOKEN }}
-          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
-          SECRET__KEY: ${{ secrets.SECRET_KEY }}
+          TF_VAR_provider_token: ${{ secrets.PROVIDER_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
