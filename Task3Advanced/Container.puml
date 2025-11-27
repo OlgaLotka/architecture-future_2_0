@@ -1,0 +1,39 @@
+@startuml
+title "future 2.0" Container Diagram
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(bperson, "Работник банка", "Просмотр банковских операций")
+Person(mperson, "Мед Работник", "Просмотр операций")
+Person(buser, "Клиент банка", "Просмотр операций, совершение переводов и оплат")
+
+System_Boundary(future_2_0, "Будущее 2.0") {
+  Container(webApp, "Web Application", "React", "ui")
+  Container(lkApp, "Портал самообслуживания", "React", "ui")
+  Container(dwh, "DWH", "", "")
+  Container(bi, "BI", "", "")
+  Container(finTech, "Финтех-сервисы", "Golang", "Java")
+  Container(ai, "ИИ-сервисы", "Python")
+  Container(data_mesh, "Управление метадатой")
+  Container(med, "Мед-сервисы")
+ }
+
+
+Rel(bperson, webApp, "Работа с банковскими данными")
+Rel(mperson, webApp, "Работа с медицинскими данными")
+Rel(buser, lkApp, "Работа с медицинскими данными")
+
+Rel(webApp, bi, "Запрос отчетных данных")
+Rel(webApp,ai, "Запрос отчетных данных")
+Rel(webApp,finTech, "Работа с данными")
+Rel(webApp,med, "Работа с данными")
+Rel(lkApp,finTech, "Работа с данными")
+
+Rel(bi, dwh, "Получение данных")
+Rel(bi, data_mesh, "Получение метаданных")
+
+Rel(finTech, dwh, "Финансовые данные")
+Rel(ai, dwh, "Данные для ИИ")
+Rel(med, dwh, "Медицинские данные")
+
+ @enduml
