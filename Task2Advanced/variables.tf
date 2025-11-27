@@ -22,16 +22,5 @@ variable "bucket" {
   default     = "loa"
 }
 
-variable "access_key" {
-  description = "Ключ доступа"
-  type        = string
-  sensitive   = true
-}
 
-
-variable "secret_key" {
-  description = "Секрет"
-  type        = string
-  sensitive   = true
-}
 
