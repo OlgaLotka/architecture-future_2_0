@@ -25,7 +25,7 @@ jobs:
           cli_config_credentials_token: ${{ secrets.PROVIDER_TOKEN }}
 
       - name: Terraform Init
-        run: terraform init
+        run: terraform init -reconfigure
         working-directory: ./Task2Advanced/
         # Учетные данные провайдера могут быть переданы через переменные окружения,
         # которые GitHub Actions автоматически загрузит из секретов.
